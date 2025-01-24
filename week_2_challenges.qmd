@@ -5,7 +5,7 @@ format: html
 editor: visual
 ---
 
-## AN588 Week 2 Challenges
+# AN588 Week 2 Challenges
 
 Create an **RMarkdown** document in which you will take notes and complete the coding CHALLENGES from [Module 4](http://fuzzyatelin.github.io/bioanth-stats/module-04/module-04.html).
 
@@ -14,4 +14,27 @@ Create an **RMarkdown** document in which you will take notes and complete the c
 ```{r}
 test_value <- 3
 print(test_value)
+```
+
+## Variable Fundamentals
+
+```{r}
+# Basic variables like int, str, and float
+x <- 3
+y <- 4.5
+genesis <- "Hello World"
+
+# More complex variables like vectors and matrices
+numerical_vector <- c(1, 4, 5, 7, 2, 4)
+one_to_ten <- 1:10
+textl_vector <- c("Hello", "Goodbye", "Live", "Laugh", genesis)
+
+#Functions can be defined as:
+first_function <- function(){
+  # Function content
+}
+
+# Modules that are similar to Python
+class(numerical_vector)
+length(one_to_ten)
 ```
