@@ -10,3 +10,8 @@ editor: visual
 Create an **RMarkdown** document in which you will take notes and complete the coding CHALLENGES from [Module 4](http://fuzzyatelin.github.io/bioanth-stats/module-04/module-04.html).
 
 **REMINDER:** You have to manually commit changes and pull into GitHub!
+
+```{r}
+test_value <- 3
+print(test_value)
+```
