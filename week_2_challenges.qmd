@@ -38,3 +38,68 @@ first_function <- function(){
 class(numerical_vector)
 length(one_to_ten)
 ```
+
+### Challenge 1
+
+-   First, create a vector of 1, word character strings comprising the first line of the novel *Ulysses*, by James Joyce: “Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.”
+
+-   Then, extract every third element of this vector
+
+```{r}
+library(stringr)
+
+joyce_quote <- "Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed."
+
+# To remove all punctuation, use:
+# gsub("item_remove", "substitute_item", variable)
+joyce_quote_no_punc <- gsub("[[:punct:]]", "", joyce_quote)
+
+# The str_split() function requires the "text" argument and a "pattern" argument
+# The "pattern" argument describes what is the feature that you want to split the text by
+joyce_quote_vector <- str_split(joyce_quote_no_punc, " ")
+
+#The output above is a list and we need a vector, we can do this by using unlist()
+joyce_quote_vector <- unlist(joyce_quote_list)
+
+# Extract every third element
+joyce_every_third <- joyce_quote_vector[seq(from = 1 , to = length(joyce_quote_vector), by =3)]
+
+print(joyce_every_third)
+```
+
+### Challenge 2
+
+```{r}
+m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE)
+m
+```
+
+Given the matrix, m, above, extract the 2nd, 3rd, and 6th columns and assign them to the variable x
+
+```{r}
+# Give m column and row names
+colnames(m) <- c(1:10)
+rownames(m) <- c(1:8)
+
+# matrix_name[rows, columns]
+x_column_1 <- c(2,3,6)
+x <- m[,x_column_1]
+x
+```
+
+Given the matrix, m, above, extract the 6th to 8th row and assign them to the variable x
+
+```{r}
+x_rows_2 <- c(6,8)
+x <- m[x_rows_2,]
+x
+```
+
+Given the matrix, m, above, extract the elements from row 2, column 2 to row 6, column 9 and assign them to the variable x
+
+```{r}
+x_rows_3 <- c(2:6)
+x_cols_3 <- c(2:9)
+x<- m[x_rows_3,x_cols_3]
+x
+```
