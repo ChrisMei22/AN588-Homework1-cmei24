@@ -200,3 +200,57 @@ When you are done, use the `str()` command to show the data type for each variab
 ```{r}
 str(df3)
 ```
+
+## Importing Data Notes - Module 5
+
+### Using the *readr* package
+
+```{r}
+require(readr)
+
+cd_file <- "/Users/christianmei/Documents/Bio_anthro_stats/AN588-Week-2/Country-Data-2016.txt"
+cd_df <- data.frame(read_tsv(cd_file, col_names = TRUE))
+head(cd_df)
+
+# if you wanted to extend this to csv files it will essentially be the same procedure
+```
+
+### Reading Excel Files
+
+```{r}
+#Preapre packages
+install.packages("tidyverse")
+# having tidyverse is needed as instructed per: 
+# https://readxl.tidyverse.org/
+install.packages("readxl")
+# Needed to install progress because otherwise readxl won't work
+# Refer to https://github.com/tidyverse/vroom/issues/538
+install.packages("progress")
+library(readxl)
+```
+
+```{r}
+
+#Load the KamilarAndCooperData xlsx file 
+k_and_c_path <- "/Users/christianmei/Documents/Bio_anthro_stats/AN588-Week-2/KamilarAndCooperData.xlsx"
+k_and_c <- data.frame(read_excel(k_and_c_path, sheet = 1, col_names = TRUE))
+head(k_and_c)
+```
+
+### Importing From Remote Servers
+
+```{r}
+library(curl)
+```
+
+```{r}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Spring25/CPDS-1960-2014-reduced.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/CPDS-1960-2014-reduced.txt")
+d <- read.table(f, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+head(d)
+```
