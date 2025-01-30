@@ -56,7 +56,7 @@ joyce_quote_no_punc <- gsub("[[:punct:]]", "", joyce_quote)
 
 # The str_split() function requires the "text" argument and a "pattern" argument
 # The "pattern" argument describes what is the feature that you want to split the text by
-joyce_quote_vector <- str_split(joyce_quote_no_punc, " ")
+joyce_quote_list <- str_split(joyce_quote_no_punc, " ")
 
 #The output above is a list and we need a vector, we can do this by using unlist()
 joyce_quote_vector <- unlist(joyce_quote_list)
@@ -219,14 +219,16 @@ head(cd_df)
 
 ```{r}
 #Preapre packages
-install.packages("tidyverse")
+# install.packages("tidyverse")
 # having tidyverse is needed as instructed per: 
 # https://readxl.tidyverse.org/
-install.packages("readxl")
+# install.packages("readxl")
 # Needed to install progress because otherwise readxl won't work
 # Refer to https://github.com/tidyverse/vroom/issues/538
-install.packages("progress")
+# install.packages("progress")
 library(readxl)
+library(progress)
+library(tidyverse)
 ```
 
 ```{r}
