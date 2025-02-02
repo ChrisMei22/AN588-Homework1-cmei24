@@ -1,0 +1,279 @@
+---
+title: "AN588-Week2-Challenges"
+author: "Christian Mei"
+format: html
+editor: visual
+---
+
+# AN588 Week 2 Challenges
+
+Create an **RMarkdown** document in which you will take notes and complete the coding CHALLENGES from [Module 4](http://fuzzyatelin.github.io/bioanth-stats/module-04/module-04.html).
+
+**REMINDER:** You have to manually commit changes and pull into GitHub!
+
+```{r}
+test_value <- 3
+print(test_value)
+```
+
+## Variable Fundamentals
+
+```{r}
+# Basic variables like int, str, and float
+x <- 3
+y <- 4.5
+genesis <- "Hello World"
+
+# More complex variables like vectors and matrices
+numerical_vector <- c(1, 4, 5, 7, 2, 4)
+one_to_ten <- 1:10
+textl_vector <- c("Hello", "Goodbye", "Live", "Laugh", genesis)
+
+#Functions can be defined as:
+first_function <- function(){
+  # Function content
+}
+
+# Modules that are similar to Python
+class(numerical_vector)
+length(one_to_ten)
+```
+
+### Challenge 1
+
+-   First, create a vector of 1, word character strings comprising the first line of the novel *Ulysses*, by James Joyce: “Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed.”
+
+-   Then, extract every third element of this vector
+
+`Yong: I really appreciated that you included a step to remove punctuation before splitting the text. This extra cleaning step ensures that words are not attached to punctuation, which is a nice improvement over my original approach where I didn’t remove punctuation.`
+
+```{r}
+library(stringr)
+
+joyce_quote <- "Stately, plump Buck Mulligan came from the stairhead, bearing a bowl of lather on which a mirror and a razor lay crossed."
+
+# To remove all punctuation, use:
+# gsub("item_remove", "substitute_item", variable)
+
+joyce_quote_no_punc <- gsub("[[:punct:]]", "", joyce_quote)
+
+# The str_split() function requires the "text" argument and a "pattern" argument
+# The "pattern" argument describes what is the feature that you want to split the text by
+joyce_quote_list <- str_split(joyce_quote_no_punc, " ")
+
+#The output above is a list and we need a vector, we can do this by using unlist()
+joyce_quote_vector <- unlist(joyce_quote_list)
+
+# Extract every third element
+joyce_every_third <- joyce_quote_vector[seq(from = 1 , to = length(joyce_quote_vector), by =3)]
+
+print(joyce_every_third)
+```
+
+### Challenge 2
+
+```{r}
+m <- matrix(data = 1:80, nrow = 8, ncol = 10, byrow = FALSE)
+m
+```
+
+Given the matrix, m, above, extract the 2nd, 3rd, and 6th columns and assign them to the variable x
+
+```{r}
+# Give m column and row names
+colnames(m) <- c(1:10)
+rownames(m) <- c(1:8)
+
+# matrix_name[rows, columns]
+x_column_1 <- c(2,3,6)
+x <- m[,x_column_1]
+x
+```
+
+Given the matrix, m, above, extract the 6th to 8th row and assign them to the variable x
+
+```{r}
+x_rows_2 <- c(6,8)
+x <- m[x_rows_2,]
+x
+```
+
+Given the matrix, m, above, extract the elements from row 2, column 2 to row 6, column 9 and assign them to the variable x
+
+```{r}
+x_rows_3 <- c(2:6)
+x_cols_3 <- c(2:9)
+x<- m[x_rows_3,x_cols_3]
+x
+```
+
+### Challenge 3
+
+Construct a 4-dimensional, 400 element array (5 x 5 x 4 x 4) named a consisting of the numbers 400 to 1 (i.e., a descending series)
+
+```{r}
+a <- array( data = order(1:400, decreasing = TRUE), dim = c(5, 5, 4, 4))
+a
+```
+
+Given this matrix, what would the following return?
+
+```{r}
+a[1, 1, 1, 2]
+```
+
+You can imagine this 5 x 5 system as 4 (5 x 5 x 4) blocks. Returns value from row 1, column 1, depth or slice 1, and block 4
+
+```{r}
+a[2, 3, 2, ]
+```
+
+This will return a collection of values from each "block" corresponding to row 2, column 3, slice 2.
+
+```{r}
+a[1:5, 1:5, 3, 3]
+```
+
+This will return a matrix of values from row 1 to 5, columns 1 to 5, slice 3, and block 3
+
+### Challenge 4
+
+Create a list representing the primate taxonomy found in [Module 4](https://fuzzyatelin.github.io/bioanth-stats/module-04/module-04.html#Lists_and_Data_Frames)
+
+I will go from smallest to biggest taxa:
+
+`Yong: Your code is clearly organized into distinct layers (“Layer 2,” “Layer 1,” and the overall “Clade”), which makes the hierarchical relationships easy to follow.`
+
+```{r}
+# Layer 3
+Platyrrhini <- c("Cebidae", "Atelidae", "Pitheciidae")
+Catarrhini <- c("Cercopithecidae", "Hylobatidae", "Hominidae")
+
+# Layer 2
+Lemuroidea <- c("Cheirogaleidae", "Lepilemuridae", "Indriidae", "Lemuridae",
+    "Daubentoniidae")
+Lorisoidea <- c("Lorisidae", "Galagidae")
+Tarsioidea  <- c("Tarsiidae")
+Anthropoidea  <- list(Platyrrhini, Catarrhini)
+names(Anthropoidea) <- list("Platyrrhini", "Catarrhini")
+
+# Layer 1
+Strepsirhini <- list(Lemuroidea, Lorisoidea)
+names(Strepsirhini) <- list("Lemuroidea", "Lorisoidea")
+Haplorhini <- list(Anthropoidea, Tarsioidea)
+names(Haplorhini) <- list("Anthropoidea", "Tarsioidea")
+
+# "Clade"
+Primates <- list(Haplorhini, Strepsirhini)
+names(Primates) <- list("Haplorhini", "Strepsirhini")
+
+Primates
+```
+
+### Challenge 5
+
+Store the following numbers as a 5 x 3 matrix, called “m3”: 3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2. Be sure to fill the matrix ROW-WISE.
+
+`Yong: While you use $X2 and $X3 for column coercion, my code used numeric indexing (e.g., df_m3[, 2]). Both work well, but you might consider adding a brief comment on why you chose to use the named columns. This might make it easier for reader to understand.`
+
+```{r}
+m3 <- matrix(data = c(3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2), nrow = 5, ncol = 3, byrow = TRUE)
+m3
+```
+
+Coerce the matrix to a data frame
+
+```{r}
+df3 <- data.frame(m3)
+# The data frame given has no column titles, but I can still call them by X1, X2, and X3
+```
+
+As a data frame, coerce the second column to be *logical-valued*
+
+```{r}
+df3$X2 <- as.logical(df3$X2) 
+df3
+```
+
+As a data frame, coerce the third column to be *factor-valued*
+
+```{r}
+df3$X3 <- as.factor(df3$X3)
+df3
+```
+
+When you are done, use the `str()` command to show the data type for each variable in your dataframe.
+
+```{r}
+str(df3)
+```
+
+## Importing Data Notes - Module 5
+
+### Using the *readr* package
+
+`Yong: The following original code chunk will give an error as the file is being loaded with absolute path which will only work with your device. What I would suggested is to use relative path as long as the qmd/rmd is in the same folder with the data.`
+
+```{r, eval=FALSE}
+require(readr)
+
+cd_file <- "/Users/christianmei/Documents/Bio_anthro_stats/AN588-Week-2/Country-Data-2016.txt"
+cd_df <- data.frame(read_tsv(cd_file, col_names = TRUE))
+head(cd_df)
+
+# if you wanted to extend this to csv files it will essentially be the same procedure
+```
+
+`Yong: The following will work on my device:)`
+
+```{r}
+require(readr)
+
+cd_file <- "Country-Data-2016.txt"
+cd_df <- data.frame(read_tsv(cd_file, col_names = TRUE))
+head(cd_df)
+
+# if you wanted to extend this to csv files it will essentially be the same procedure
+```
+
+### Reading Excel Files
+
+```{r}
+#Preapre packages
+# install.packages("tidyverse")
+# having tidyverse is needed as instructed per: 
+# https://readxl.tidyverse.org/
+# install.packages("readxl")
+# Needed to install progress because otherwise readxl won't work
+# Refer to https://github.com/tidyverse/vroom/issues/538
+# install.packages("progress")
+library(readxl)
+library(progress)
+library(tidyverse)
+```
+
+```{r}
+
+#Load the KamilarAndCooperData xlsx file 
+k_and_c_path <- "KamilarAndCooperData.xlsx"
+k_and_c <- data.frame(read_excel(k_and_c_path, sheet = 1, col_names = TRUE))
+head(k_and_c)
+```
+
+### Importing From Remote Servers
+
+```{r}
+library(curl)
+```
+
+```{r}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Spring25/CPDS-1960-2014-reduced.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+```{r}
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/CPDS-1960-2014-reduced.txt")
+d <- read.table(f, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+head(d)
+```
